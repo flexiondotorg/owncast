@@ -203,9 +203,10 @@ func (t *Transcoder) getString() string {
 		"-hide_banner",
 		"-loglevel warning",
 		t.codec.GlobalFlags(),
-		"-fflags +nobuffer+genpts+igndts", // Do not buffer frame if possible. Generate presentation time stamp if missing
-		"-flags +global_header+cgop",      // Reduce header overhead by sending out-of-band. Force closed GOPs
-
+		"-fflags +genpts",                 // Generate presentation time stamp if missing
+		"-flags +cgop",                    // Force closed GOPs
+		"-probesize 32",                   // Set the minimum probing size to 32 bytes to reduce latency
+		"-analyzeduration 64000",          // Probe the input for 64 microseconds to reduce latency
 		"-i ", t.input,
 
 		t.getVariantsString(),
