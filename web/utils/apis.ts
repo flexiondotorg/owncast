@@ -1,3 +1,5 @@
+const semverGt = require('semver/functions/gt');
+
 /* eslint-disable prefer-destructuring */
 const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
 const ADMIN_STREAMKEY = process.env.NEXT_PUBLIC_ADMIN_STREAMKEY;
@@ -180,28 +182,8 @@ export async function getGithubRelease() {
   return fetchExternalData(GITHUB_RELEASE_URL);
 }
 
-// Stolen from https://gist.github.com/prenagha/98bbb03e27163bc2f5e4
-const VPAT = /^\d+(\.\d+){0,2}$/;
 function upToDate(local, remote) {
-  if (!local || !remote || local.length === 0 || remote.length === 0) return false;
-  if (local === remote) return true;
-  if (VPAT.test(local) && VPAT.test(remote)) {
-    const lparts = local.split('.');
-    while (lparts.length < 3) lparts.push('0');
-    const rparts = remote.split('.');
-    while (rparts.length < 3) rparts.push('0');
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < 3; i++) {
-      const l = parseInt(lparts[i], 10);
-      const r = parseInt(rparts[i], 10);
-      if (l === r)
-        // eslint-disable-next-line no-continue
-        continue;
-      return l > r;
-    }
-    return true;
-  }
-  return local >= remote;
+  return !semverGt(remote, local);
 }
 
 // Make a request to the server status API and the Github releases API

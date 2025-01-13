@@ -192,7 +192,7 @@ func (c *VaapiCodec) GlobalFlags() string {
 
 // PixelFormat is the pixel format required for this codec.
 func (c *VaapiCodec) PixelFormat() string {
-	return "vaapi_vld"
+	return "vaapi"
 }
 
 // Scaler is the scaler used for resizing the video in the transcoder.
@@ -202,7 +202,7 @@ func (c *VaapiCodec) Scaler() string {
 
 // ExtraFilters are the extra filters required for this codec in the transcoder.
 func (c *VaapiCodec) ExtraFilters() string {
-	return ""
+	return "hwupload=extra_hw_frames=64,format=vaapi"
 }
 
 // ExtraArguments are the extra arguments used with this codec in the transcoder.
