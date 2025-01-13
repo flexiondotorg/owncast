@@ -325,6 +325,7 @@ func (c *QuicksyncCodec) GlobalFlags() string {
 
 	return strings.Join(flags, " ")
 }
+
 // PixelFormat is the pixel format required for this codec.
 func (c *QuicksyncCodec) PixelFormat() string {
 	return "qsv"
